@@ -10,15 +10,18 @@ const userSchema = new mongoose.Schema({
     required: [true, "Please provide an email"],
     unique: true,
   },
-  //   address: {
-  //     type: String,
-  //   },
-  //   phone: {
-  //     type: Number,
-  //   },
+  address: {
+    type: String,
+  },
+  phone: {
+    type: Number,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
+  },
+  profilePicture: {
+    type: String,
   },
 });
 

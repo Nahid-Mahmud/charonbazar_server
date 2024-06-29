@@ -1,5 +1,7 @@
 const User = require("../models/userModels");
 
+// post user
+
 const postUser = async (req, res) => {
   console.log(req.body);
   try {
@@ -11,6 +13,8 @@ const postUser = async (req, res) => {
     const newUser = new User({
       name: req.body.name,
       email: req.body.email,
+      address: "",
+      phone: "",
     });
 
     const savedUser = await newUser.save();
@@ -23,4 +27,24 @@ const postUser = async (req, res) => {
   }
 };
 
-module.exports = { postUser };
+// update user by email
+const updateUser = async (req, res) => {
+  try {
+    const email = req.params.email;
+
+    const { name, address, phone } = req.body;
+
+    const user = await User.findOneAndUpdate({ email }, { name, address, phone }, { new: true });
+
+    const updatedUser = await user.save();
+
+    res.status(200).send({
+      updatedUser,
+      message: "User updated successfully",
+    });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+module.exports = { postUser, updateUser };
