@@ -87,4 +87,20 @@ const editProduct = async (req, res) => {
   }
 };
 
-module.exports = { postProduct, getAllProducts, getSingleProduct, editProduct };
+// delete proudct
+
+const deleteProduct = async (req, res) => {
+  try {
+    const productId = req.params.id;
+
+    await Product.findByIdAndDelete(productId);
+
+    res.status(200).send({
+      message: "Product deleted successfully",
+    });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
+module.exports = { postProduct, getAllProducts, getSingleProduct, editProduct,deleteProduct };
