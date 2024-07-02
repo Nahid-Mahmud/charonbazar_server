@@ -3,7 +3,7 @@ const Product = require("../models/productModel");
 // post product
 const postProduct = async (req, res) => {
   try {
-    const { productId, name, description, price, images, category, stock } = req.body;
+    const { name, description, price, images, category, stock } = req.body;
 
     const newProduct = new Product({
       name,
@@ -103,4 +103,34 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-module.exports = { postProduct, getAllProducts, getSingleProduct, editProduct,deleteProduct };
+// product search by name and price range
+
+const searchProduct = async (req, res) => {
+  try {
+    const { name, minPrice, maxPrice } = req.query;
+
+    // check if name, minPrice, and maxPrice are provided
+    if (!name && minPrice && maxPrice) {
+      const products = await Product.find({
+        price: { $gte: minPrice, $lte: maxPrice },
+      });
+
+      res.status(200).send({
+        products,
+        message: "Products retrieved successfully",
+      });
+    } else if (name && !minPrice && !maxPrice) {
+      const products = await Product.find({
+        name: { $regex: name, $options: "i" },
+        price: { $gte: minPrice },
+      });
+
+      res.status(200).send({
+        products,
+        message: "Products retrieved successfully",
+      });
+    }
+  } catch (err) {}
+};
+
+module.exports = { searchProduct, postProduct, getAllProducts, getSingleProduct, editProduct, deleteProduct };
