@@ -4,6 +4,7 @@ const connectDB = require("./src/config/db");
 const userRoutes = require("./src/routes/userRoutes");
 const productRoutes = require("./src/routes/productsRoute");
 const cartRoutes = require("./src/routes/cartRoutes");
+const orderRoutes = require("./src/routes/ordersRoute");
 
 const cors = require("cors");
 const app = express();
@@ -32,6 +33,10 @@ app.use("/products", productRoutes);
 
 // Mount cartRoutes on the '/cart' path
 app.use("/cart", cartRoutes);
+
+// Mount orderRoutes on the '/orders' path
+
+app.use("/orders", orderRoutes);
 
 // Define a route for the root path to send a response
 app.get("/", (req, res) => {

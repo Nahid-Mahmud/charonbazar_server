@@ -10,18 +10,26 @@ const postUser = async (req, res) => {
       res.status(400).send({ message: "Name and email are required" });
     }
 
-    const newUser = new User({
-      name: req.body.name,
-      email: req.body.email,
-      address: "",
-      phone: "",
-    });
+    // check if user already exists
 
-    const savedUser = await newUser.save();
-    res.status(201).send({
-      savedUser,
-      message: "User was created",
-    });
+    const user = await User.findOne({ email: req.body.email });
+
+    if (user) {
+      res.status(400).send({ message: "User already exists" });
+    } else {
+      const newUser = new User({
+        name: req.body.name,
+        email: req.body.email,
+        address: "",
+        phone: "",
+      });
+
+      const savedUser = await newUser.save();
+      res.status(201).send({
+        savedUser,
+        message: "User was created",
+      });
+    }
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
