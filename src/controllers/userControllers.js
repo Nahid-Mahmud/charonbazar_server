@@ -26,7 +26,7 @@ const postUser = async (req, res) => {
 
       const savedUser = await newUser.save();
       res.status(201).send({
-        savedUser,
+        data: savedUser,
         message: "User was created",
       });
     }
@@ -47,7 +47,7 @@ const updateUser = async (req, res) => {
     const updatedUser = await user.save();
 
     res.status(200).send({
-      updatedUser,
+      data: updatedUser,
       message: "User updated successfully",
     });
   } catch (error) {
@@ -55,4 +55,22 @@ const updateUser = async (req, res) => {
   }
 };
 
-module.exports = { postUser, updateUser };
+// delete user by email
+
+const deleteUser = async (req, res) => {
+  try {
+    const email = req.params.email;
+
+    const deletedUser = await User.findOneAnd({ email });
+
+    if (!deletedUser) {
+      res.status(404).send({ message: "User not found" });
+    } else {
+      res.status(200).send({ message: "User deleted successfully" });
+    }
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
+module.exports = { postUser, updateUser, deleteUser };

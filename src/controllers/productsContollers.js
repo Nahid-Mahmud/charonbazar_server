@@ -17,7 +17,7 @@ const postProduct = async (req, res) => {
     const savedProduct = await newProduct.save();
 
     res.status(201).send({
-      savedProduct,
+      data: savedProduct,
       message: "Product was created",
     });
   } catch (err) {
@@ -35,7 +35,7 @@ const getAllProducts = async (req, res) => {
       // get products by category
       const products = await Product.find({ category });
       res.status(200).send({
-        products,
+        data: products,
         message: "Products retrieved successfully by category",
       });
     }
@@ -45,7 +45,7 @@ const getAllProducts = async (req, res) => {
     if (!category) {
       const products = await Product.find({});
       res.status(200).send({
-        products,
+        data: products,
         message: "Products retrieved successfully",
       });
     }
@@ -62,7 +62,7 @@ const getSingleProduct = async (req, res) => {
 
     const product = await Product.findById(productId);
     res.send({
-      product,
+      data: product,
       message: "Product retrieved successfully",
     });
   } catch (err) {
@@ -80,7 +80,7 @@ const editProduct = async (req, res) => {
 
     res.status(200).send({
       message: "Product updated successfully",
-      updatedProduct,
+      data: updatedProduct,
     });
   } catch (err) {
     res.status(500).send({ message: err.message });
@@ -116,7 +116,7 @@ const searchProduct = async (req, res) => {
       });
 
       res.status(200).send({
-        products,
+        data: products,
         message: "Products retrieved successfully",
       });
     } else if (name && !minPrice && !maxPrice) {
@@ -126,7 +126,7 @@ const searchProduct = async (req, res) => {
       });
 
       res.status(200).send({
-        products,
+        data: products,
         message: "Products retrieved successfully",
       });
     }
@@ -134,4 +134,3 @@ const searchProduct = async (req, res) => {
 };
 
 module.exports = { searchProduct, postProduct, getAllProducts, getSingleProduct, editProduct, deleteProduct };
-

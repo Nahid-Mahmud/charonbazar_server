@@ -14,7 +14,7 @@ const createCart = async (req, res) => {
     const savedCart = await newCart.save();
 
     res.status(201).send({
-      savedCart,
+      data: savedCart,
       message: "Cart was created",
     });
   } catch (err) {
@@ -30,7 +30,7 @@ const updateCart = async (req, res) => {
     const { products } = req.body;
     const updatedCart = await Cart.findOneAndUpdate({ userEmail }, { products }, { new: true });
     res.status(200).send({
-      updatedCart,
+      data: updatedCart,
       message: "Cart was updated",
     });
   } catch (err) {
@@ -45,7 +45,7 @@ const getCart = async (req, res) => {
     const userEmail = req.params.email;
     const cart = await Cart.findOne({ userEmail });
     res.status(200).send({
-      cart,
+      data: cart,
       message: "Cart retrieved successfully",
     });
   } catch (err) {
