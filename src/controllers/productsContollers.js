@@ -134,3 +134,4 @@ const searchProduct = async (req, res) => {
 };
 
 module.exports = { searchProduct, postProduct, getAllProducts, getSingleProduct, editProduct, deleteProduct };
+
