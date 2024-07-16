@@ -3,9 +3,9 @@ require("dotenv").config();
 
 // Get the connection string from the env file
 
-const connectDB = async () => {
-  const connectionUri = process.env.CONNECTION_URI;
+const connectionUri = process.env.CONNECTION_URI;
 
+const connectDB = async () => {
   try {
     await mongoose.connect(connectionUri);
     console.log("MongoDB Connected...");
