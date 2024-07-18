@@ -16,7 +16,7 @@ app.use(express.json());
 // Configure CORS with specific origin
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:5173"],
   })
 );
 

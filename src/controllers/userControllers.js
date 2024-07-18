@@ -3,7 +3,9 @@ const User = require("../models/userModels");
 // post user
 
 const postUser = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
+  const user = await User.findOne({ email: req.body.email });
+  console.log(user);
   try {
     // check if name and email are provided
     if (!req.body.name || !req.body.email) {
@@ -11,11 +13,8 @@ const postUser = async (req, res) => {
     }
 
     // check if user already exists
-
-    const user = await User.findOne({ email: req.body.email });
-
-    if (user) {
-      res.status(400).send({ message: "User already exists" });
+    else if (user) {
+      res.status(409).send({ message: "User already exists" });
     } else {
       const newUser = new User({
         name: req.body.name,
