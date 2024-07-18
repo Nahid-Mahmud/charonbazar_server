@@ -6,6 +6,7 @@ const productRoutes = require("./src/routes/productsRoute");
 const cartRoutes = require("./src/routes/cartRoutes");
 const orderRoutes = require("./src/routes/ordersRoute");
 const categoryRoutes = require("./src/routes//categoriesRoutes");
+const authRoutes = require("./src/routes/authRoutes");
 
 const cors = require("cors");
 const app = express();
@@ -42,6 +43,10 @@ app.use("/orders", orderRoutes);
 // Mount categoryRoutes on the '/categories' path
 
 app.use("/categories", categoryRoutes);
+
+// auth routes
+
+app.use("/jwt", authRoutes);
 
 // Define a route for the root path to send a response
 app.get("/", (req, res) => {
